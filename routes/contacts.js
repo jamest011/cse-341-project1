@@ -2,14 +2,15 @@ const express = require('express');
 const router = express.Router();
 
 const contactsController = require('../controllers/contacts');
+const validation = require('../middleware/validate');
 
 router.get('/', contactsController.getAll);
 
 router.get('/:id', contactsController.getSingle);
 
-router.post('/', contactsController.createContact);
+router.post('/', validation.saveContact, contactsController.createContact);
 
-router.put('/:id', contactsController.updateContact); //patch and put are used interchangeably
+router.put('/:id', validation.saveContact, contactsController.updateContact); //patch and put are used interchangeably
 
 router.delete('/:id', contactsController.deleteContact);
 
