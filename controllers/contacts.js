@@ -1,22 +1,36 @@
 const mongodb = require('../data/database');
 const ObjectId = require('mongodb').ObjectId;
 
-const getAll = async (req,res) => {
+const getAll = (req,res) => {
     //#swagger.tags['Contacts']
-    const result = await mongodb.getDatabase().db().collection('contacts').find();
-    result.toArray().then((contacts) => {
+    mongodb
+    .getDb()
+    .db()
+    .collection('contacts')
+    .find()
+    .toArray((err, lists) => {
+        if (err) {
+            res.status(400).json({message: err });
+        }
         res.setHeader('Content-Type', 'application/json');
-        res.status(200).json(contacts);
+        res.status(200).json(lists);
     });
 };
 
-const getSingle = async (req,res) => {
+const getSingle = (req,res) => {
     //#swagger.tags['Contacts']
-    const userId = new ObjectId(req.params.id);
-    const result = await mongodb.getDatabase().db().collection('contacts').find({ _id: userId });
-    result.toArray().then((contacts) => {
+    const userID = new ObjectId(req.params.id);
+    mongodb
+    .getDb()
+    .db()
+    .collection('contacts')
+    .find({_id: userId })
+    .toArray((err, result) => {
+        if (err) {
+            res.status(400).json({message: err });
+        }
         res.setHeader('Content-Type', 'application/json');
-        res.status(200).json(contacts[0]);
+        res.status(200).json(result[0]);
     });
 };
 
@@ -65,6 +79,8 @@ const deleteContact = async (req,res) => {
         res.status(500).json(response.error || 'Some error occurred while deleting the user.');
     }
 };
+
+const
 
 
 module.exports = {
