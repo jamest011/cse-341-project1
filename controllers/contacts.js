@@ -4,11 +4,11 @@ const ObjectId = require('mongodb').ObjectId;
 const getAll = (req,res) => {
     //#swagger.tags['Contacts']
     mongodb
-    .getDb()
-    .db()
-    .collection('contacts')
-    .find()
-    .toArray((err, lists) => {
+        .getDb()
+        .db()
+        .collection('contacts')
+        .find()
+        .toArray((err, lists) => {
         if (err) {
             res.status(400).json({message: err });
         }
@@ -24,17 +24,17 @@ const getSingle = (req,res) => {
     }
     const userID = new ObjectId(req.params.id);
     mongodb
-    .getDb()
-    .db()
-    .collection('contacts')
-    .find({_id: userId })
-    .toArray((err, result) => {
-        if (err) {
-            res.status(400).json({message: err });
-        }
-        res.setHeader('Content-Type', 'application/json');
-        res.status(200).json(result[0]);
-    });
+        .getDb()
+        .db()
+        .collection('contacts')
+        .find({_id: userId })
+        .toArray((err, result) => {
+            if (err) {
+                res.status(400).json({message: err });
+            }
+            res.setHeader('Content-Type', 'application/json');
+            res.status(200).json(result[0]);
+        });
 };
 
 const createContact = async (req,res) => {
