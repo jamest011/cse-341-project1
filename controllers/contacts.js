@@ -4,7 +4,7 @@ const ObjectId = require('mongodb').ObjectId;
 const getAll = (req,res) => {
     //#swagger.tags['Contacts']
     mongodb
-        .getDb()
+        .getDatabase()
         .db()
         .collection('contacts')
         .find()
@@ -22,9 +22,9 @@ const getSingle = (req,res) => {
     if (!ObjectId.isValid(req.params.id)) {
         res.status(400).json('Must use a valid contact id to find a contact.');
     }
-    const userID = new ObjectId(req.params.id);
+    const userId = new ObjectId(req.params.id);
     mongodb
-        .getDb()
+        .getDatabase()
         .db()
         .collection('contacts')
         .find({_id: userId })
